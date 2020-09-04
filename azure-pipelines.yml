@@ -1,0 +1,24 @@
+  # PHP
+# Test and package your PHP project.
+# Add steps that run tests, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/php
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  phpVersion: 7.2
+
+steps:
+- task: Docker@2
+  displayName: Build e Push da Imagem da Aplicação no Registry do OCP
+  inputs:
+    containerRegistry: 'registryOCPAzureDevops'
+    repository: 'azure-devops/app'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+    addPipelineData: false
